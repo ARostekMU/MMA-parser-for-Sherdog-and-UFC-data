@@ -10,7 +10,7 @@ import logging
 import json
 
 # Initializes logging file.
-logging.basicConfig(filename='sherdog.log', level=logging.INFO, format='%(asctime)s:%(levelname)s:%(message)s')
+logging.basicConfig(filename='sherdog.log', level=logging.DEBUG, format='%(asctime)s:%(levelname)s:%(message)s')
 
 
 class Fighter(object):
@@ -60,7 +60,14 @@ class Fighter(object):
         Sets up response object based on self.url value.
         :return: response object
         """
-        resource = requests.get(self.url)
+        with requests.Session() as se:
+            se.headers = {
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.110 Safari/537.36",
+            "Accept-Encoding": "gzip, deflate",
+            "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8",
+            "Accept-Language": "en"
+            }
+        resource = se.get(self.url)
         self.resource = resource
         return resource
 
