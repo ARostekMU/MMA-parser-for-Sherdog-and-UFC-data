@@ -40,18 +40,20 @@ class Fighter():
 
         for match in self.matches:
             if match.date < date:
+                weight = 1
+
                 if match.result == "win":
-                    wins += 1
+                    wins += 1*weight
                 elif match.result == "loss":
-                    losses += 1
+                    losses += 1*weight
                 elif match.result == "draw":
-                    draws += 1
+                    draws += 1*weight
 
         # ensure no division by zero error occurs by checking if losses are zero
-        win_rate = (wins + 0.5 * draws)/sum((wins, losses, draws))
+        weighted_win_rate = (wins + 0.5 * draws)/sum((wins, losses, draws))
 
-        print(self.name, "win_rate", win_rate, "wins", wins, "losses", losses, "draws", draws)
-        return win_rate
+        print(self.name, "weighted_win_rate", weighted_win_rate, "wins", wins, "losses", losses, "draws", draws)
+        return weighted_win_rate
 
     def calculate_odds(self, opponent: "Fighter", date: date) -> None:
         wr1 = self.evaluate(date=date)
