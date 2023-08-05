@@ -8,6 +8,7 @@ import requests
 import csv
 import logging
 import json
+import os
 
 # Initializes logging file.
 logging.basicConfig(filename='sherdog.log', level=logging.DEBUG, format='%(asctime)s:%(levelname)s:%(message)s')
@@ -423,9 +424,12 @@ def scrape_all_fighters(filename, filetype='json', fighter_index=0):
             init_writer.writerow(headers)
 
     elif filetype == 'json':
-        json_init = {}
-        with open(f'{filename}.json', 'w') as fighter_json:
-            json.dump(json_init, fighter_json)
+        if os.path.isfile(f"{filename}.json"):
+            pass
+        else:
+            json_init = {}
+            with open(f'{filename}.json', 'w') as fighter_json:
+                json.dump(json_init, fighter_json)
 
     fail_counter = 0    # amount of 'empty' indexes in a row.
 
@@ -700,10 +704,3 @@ def helper_read_fighters_from_csv(filename, delimiter=','):
 
 if __name__ == '__main__':
     scrape_all_fighters('sherdog')
-
-
-
-
-
-
-
