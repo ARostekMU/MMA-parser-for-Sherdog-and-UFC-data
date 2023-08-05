@@ -11,13 +11,13 @@ class Fighter():
 
     @classmethod
     def load_from_db(cls, name: str) -> "Fighter":
-        filename = "fighter_db.json"
+        filename = "sherdog_db.json"
 
         with open(filename, 'r') as file:
             data = json.load(file)
 
         if name in data:
-            matches = data[name]
+            matches = data[name]["matches"]
             match_objs = []
 
             for match in matches:
@@ -62,9 +62,9 @@ class Match():
     date: date
 
 
-fighter1 = Fighter.load_from_db(name="Chad Washburn")
+fighter1 = Fighter.load_from_db(name="Jim Mullen")
 print(fighter1)
-fighter2 = Fighter.load_from_db(name="Anthony Ramos")
+fighter2 = Fighter.load_from_db(name="Patrick Smith")
 print(fighter2)
 
 fighter1.calculate_odds(opponent=fighter2, date=date(2001, 4, 29))
