@@ -323,7 +323,7 @@ class Fighter(object):
         :param filename: string with name of the file we want to save data to; file will be created with given name
         :return: None
         """
-        fighter_dictionary = {self.name: []}  # initializing dictionary that will be passed into json file.
+        fighter_dictionary = {self.name: {"id": self.fighter_index, "matches": []}}  # initializing dictionary that will be passed into json file.
 
         for index in range(len(self.result_data)):
             try:
@@ -360,7 +360,7 @@ class Fighter(object):
                 time = 'NA'
             line = {'opponent': opp, 'result': result, 'event': event, 'date': event_date, 'method': method,
                     'judge': judges, 'round': rounds, 'time': time}
-            fighter_dictionary[self.name].append(line)
+            fighter_dictionary[self.name]["matches"].append(line)
 
         with open(f'{filename}.json') as fighter_json:
             data = json.load(fighter_json)
@@ -377,6 +377,7 @@ class Fighter(object):
         :param fighter_page: optional - css selector match with fighter's page, or None
         :return: True for valid fighter's page and False if page was empty
         """
+        self.fighter_index = fighter_index
         if fighter_index is not None:
             self._set_url_from_index(fighter_index)
         elif fighter_page is not None:
