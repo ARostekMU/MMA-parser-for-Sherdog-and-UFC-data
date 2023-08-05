@@ -408,11 +408,12 @@ class Fighter(object):
 # END OF FIGHTER CLASS
 
 
-def scrape_all_fighters(filename, filetype='csv'):
+def scrape_all_fighters(filename, filetype='json', fighter_index=0):
     """
     Scrapes information about all fighters in Sherdog's database and saves them into csv or json file.
     :param filename: string with name of the file we want to save data to; file will be created with given name
     :param filetype: string with either 'csv' or 'json' as a type of file where results will be stored
+    :param fighter_index: int that is a starting index of a fighter that scraper is collecting information about
     :return: None
     """
     if filetype == 'csv':
@@ -426,7 +427,6 @@ def scrape_all_fighters(filename, filetype='csv'):
         with open(f'{filename}.json', 'w') as fighter_json:
             json.dump(json_init, fighter_json)
 
-    fighter_index = 0   # sets up and stores index of a fighter that scraper is collecting information about.
     fail_counter = 0    # amount of 'empty' indexes in a row.
 
     while fail_counter <= 10:  # scraper will be done after there were 10 non-existing sites (indexes) in a row.
